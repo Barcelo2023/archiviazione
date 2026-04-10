@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leggi msg</title>
+     <link rel="icon" href="img/favicon.png"  type="image/png">
+    <style>
+
+body
+{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-family: 'Times New Roman', serif;
+    align-items: center;
+    text-align: center;
+}
+   
+
+
+#container{       
+    height: 500px;
+    width:273px;
+    margin-left: 40px;
+    margin-top: 50px;
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    border: 5px;
+   
+   
+    
+} 
+
+h3{
+    
+    margin-top: 40px;
+    
+}
+
+
+ 
+  
+input{
+   height: 30px;
+    width: 180px;   
+    border-radius: 5px;   
+    font-size: 14px;
+    transform: translateY(-12px);  
+
+}    
+
+
+#error{
+    color: red;        
+}
+
+
+
+
+textarea {
+    line-height: 20px; 
+    background-image: linear-gradient(transparent 19px, #ccc 19px);
+    background-size: 100% 20px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-top: 20px;
+}
+button{
+    width: 68px;
+    height: 35px;
+    margin-top: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    display: inline;
+}
+
+#btc{
+  transform: translateY(-8px);
+}
+#data{
+     height: 20px;
+    width: 132px;
+   
+    border-radius: 5px;
+    padding: 0 15px;
+    font-size: 12px;
+    
+    margin-top: 35px;
+   
+
+}  
+button:hover{
+    background-color: orangered;
+}
+
+
+  </style>
+  </head>
+  <body>
+        
+
+    <div id="container">
+     <h3>Leggi note</h3>
+
+       <p id="arch"   >Nome archivio</p> 
+      <input type="text" name="archivio" id="archivio" required  >     
+            
+       <p id="inskey"   >titolo nota</p> 
+      <input type="text" name="nota" id="nota" required  >           
+      <div  id="error"  required  ></div>          
+      
+      <textarea  name="message" id="message" rows="5"  cols="30" ></textarea>             
+
+      <button onclick="verifica()" 
+            type="button" id="verifica" >Richiama nota</button>
+
+       <button onclick="decripta()" disabled = "disabled"; 
+            type="button" id="abilita" >Decripta nota</button>
+            
+       <button onclick="pulisci()" disabled = "disabled"; 
+            type="button" id="btc" >Pulisci</button>
+
+       <input type="text" name="data" id="data" >
+
+   </div>  
+
+    <script>
+
+
+        let numero ;        
+        let conta;
+        let msg;
+        let lunghezza;
+        let lettera;
+        let converti;
+        let pari;     
+        let stringaConverti;
+        let numeroRandom;
+        let nota;
+        let db;
+        let archivio;
+
+
+             let data= new Date(); 
+             document.getElementById('data').value = (data) ; 
+             
+             function verifica(){
+                
+              archivio = document.getElementById('archivio').value;
+
+               let trovato =  localStorage.getItem(archivio);
+                if (trovato === null){
+                 
+                 document .getElementById("error").innerText = "nome archivio errato "; 
+                 return                                   
+                 } 
+
+              nota = document.getElementById('nota').value;
+               lunghezza = nota.length;
+              if(lunghezza  < 3 ){
+               document .getElementById("error").innerText = "titolo nota errato o mancante";  
+               return
+              }
+
+            // 1. Apri il database
+              const request = indexedDB.open(archivio, 1);
+
+              request.onsuccess = function(event) {
+               const db = event.target.result;
+
+             // 2. Apri una transazione in lettura
+               const transaction = db.transaction(["note"], "readonly");
+
+             // 3. Accedi allo store
+               const Store = transaction.objectStore("note");
+
+             // 4. Leggi il record con una specifica chiave (es. 123)
+              const getRequest = Store.get(nota);
+
+              // 5. Gestisci il successo della lettura
+               getRequest.onsuccess = function(e) {
+              const record = e.target.result;
+             
+             if (record) {
+               numeroRandom = record.numero;
+               msg = record.messaggio;
+               document.getElementById('message').value = (msg) ; 
+                document.getElementById('abilita').disabled = false; 
+     
+            } else {
+                document .getElementById("error").innerText = "titolo nota errato o mancante";
+               
+    }
+  };
+ 
+};
+                
+         
+            }
+    
+                
+                                                                   
+              function decripta(){
+                                                        
+                let  stringaConverti = "";
+                let  numero = numeroRandom;
+                
+                 let lunghezza = msg.length;  
+
+                 for ( let conta=0; conta <lunghezza; conta ++)
+	               {		
+                 let   lettera = msg[conta] ;  	     		 
+                 let  converti = lettera.charCodeAt(0);
+                  
+	  	         let   pari = conta;	  	  	  	  
+
+                 if (pari %2 == 0) {  
+                  converti=converti + numero;
+               
+                }
+                 else{     
+                 converti = converti - numero; 
+                
+               }
+
+                 numero = numero  -1;
+            	
+		         stringaConverti+=String.fromCharCode(converti) ;                             
+         
+          } 
+              
+                 document.getElementById("message").value = stringaConverti;
+                 document.getElementById('btc').disabled = false;  
+                
+      }    
+             
+                 function pulisci(){
+                 document.getElementById('archivio').value ="";
+                  document .getElementById("error").innerText = ""; 
+                  document.getElementById("message").value = ""; 
+                   document.getElementById("nota").value = ""; 
+
+                 }
+        
+    </script>
+     
+        
+ </body>
+ </html>
+ 
+ 
