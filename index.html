@@ -29,6 +29,7 @@
     border-radius: 10px;
     border: 5px;
     align-items: center;
+    text-align: center;
     
     
 }
@@ -37,16 +38,14 @@ h3{
     margin-top: 30px;    
 }
 
-#nome{
-    transform: translateY(17px);
-}
+
 #arch{
    height: 30px;
     width: 150px;  
     border-radius: 5px;   
     font-size: 16px;
     font-family: 'Times New Roman', serif;
-    margin-top: 20px;
+    margin-top: 5px;
     border: groove;
     cursor: pointer;  
 }
@@ -72,18 +71,20 @@ h3{
 
 button
 {
-    width: 100px;
-    height: 30px;
+    width: 80px;
+    height: 35px;
     margin-top:45px;
     border-radius: 5px;
 
     margin-left: 10px;
     cursor: pointer;
-    display: inline;
+    
    
 }
 
-
+#buttl{
+    transform: translateY(-9px);
+}
 
 
 button:hover
@@ -101,10 +102,14 @@ button:hover
      <h3>Archivio note</h3>
      <div id="nome">Nome Archivio</div>
      <input type="text" name="arch"  id="arch">
-      <div  id="error"   ></div>        
-      <button onclick="inserisci()"  id="btni" >inserisci</button>          
+      <div  id="error"   ></div> 
+       <button onclick="creaarch()"  >crea archivio</button> 
+
+      <button onclick="chiavi()"  >chiavi inserite</button>          
            
-      <button  onclick="leggi()" id="btnl">leggi</button>
+      <button  onclick="inserisci()" >inserisci nota</button>
+
+      <button  onclick="leggi()"  id="buttl">leggi note</button>
 
        <input type="text" name="data" id="data"  readonly>
                       
@@ -112,18 +117,15 @@ button:hover
 
              let data = new Date(); 
              document.getElementById('data').value = (data); 
-
-          
-               
-
-              function inserisci()
+                        
+              function creaarch()
               { 
                 let archivio =document.getElementById('arch').value;
                 
              //      verifico se l archivio esiste                
                 let trovato =  localStorage.getItem(archivio);
                 if (trovato != null){
-                 location.href='insnota.html'; 
+                 document .getElementById("error").innerText = "archivio gia' creato"; 
                  return
                 }
                   
@@ -135,33 +137,42 @@ button:hover
                  } 
   
   //      se archivioo non esiste lo creo 
-  
+                  document .getElementById("error").innerText = ""; 
 
-               let db;
-               let request = indexedDB.open(archivio, 1);
+                 let db;
+                 let request = indexedDB.open(archivio, 1);
 
-               request.onupgradeneeded = (event) => {
-               db = event.target.result;
-               // Creazione dello store SENZA keyPath definita
-               if (!db.objectStoreNames.contains("note")) {
-               db.createObjectStore("note");
-               localStorage.setItem(archivio, 'ARCHIVIO');
+                  request.onupgradeneeded = (event) => {
+                 db = event.target.result;
+                 // Creazione dello store SENZA keyPath definita
+                 if (!db.objectStoreNames.contains("note")) {
+                  db.createObjectStore("note");
+                  localStorage.setItem(archivio, 'ARCHIVIO');
+                }
+              };
+              
+              }  
+              
+              function chiavi(){
+               location.href='scroll.html';
+               return
+            
               }
-             };
-                location.href='insnota.html'; 
-                 return
-              }       
 
                
-               function leggi()
+               function inserisci()
+               {                      
+               location.href='insnota.html';
+               return
+              }
+ 
+              function leggi()
                {                      
                location.href='readnota.html';
                return
               }
- 
-  
               
-                
+ 
             
                 
     </script>
