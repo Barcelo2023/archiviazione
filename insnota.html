@@ -136,7 +136,7 @@
                    const transaction = db.transaction(["note"], "readwrite");
                    const store = transaction.objectStore("note");
 
-                    randomNumber = randomNumber +3;
+                    
                     key = titolo; // La tua chiave
                     dati= { numero: randomNumber, messaggio: stringa2 }; 
                      store.add(dati, key);  
