@@ -28,45 +28,51 @@
     <script>
 
                let data = new Date(); 
-             document.getElementById('data').value = (data); 
+               document.getElementById('data').value = (data); 
                         
-              function creaarch()
-              { 
-                let archivio =document.getElementById('arch').value;
-                
-            
+                function creaarch()  { 
+
+                const testoOriginale = document.getElementById('arch').value;
+                 const archivio = testoOriginale.toLowerCase().replace(/ /g, "");
+                                                                       
+                // Risultato: "testo in maiuscolo"
+
                 let  lunghezza = archivio.length; 
               
-                 if (lunghezza < 5 || lunghezza > 16)  {
-                  document .getElementById("error").innerText = "nome archivio errato"; 
+                 if (lunghezza < 5 || lunghezza > 10)  {
+                  document .getElementById("error").innerText = "nome archivio errato o mancante"; 
                   return
                  } 
   
-  //      se archivioo non esiste lo creo 
+                 //      se archivioo non esiste lo creo 
                   document .getElementById("error").innerText = ""; 
 
-                 let db;
-                 let request = indexedDB.open(archivio, 1);
+               let db;
+               let request = indexedDB.open(archivio, 1);
+               let appenaCreato = false; // Flag di controllo
 
-                  request.onupgradeneeded = (event) => {
-                 db = event.target.result;
-                 // Creazione dello store SENZA keyPath definita
-                 if (!db.objectStoreNames.contains("note")) {
-                  db.createObjectStore("note");
-                  
-                   document .getElementById("error").innerText = "archivio creato con successo"; 
-                }
-                
+                request.onupgradeneeded = (event) => {
+                db = event.target.result;
+                if (!db.objectStoreNames.contains("note")) {
+                 db.createObjectStore("note");
+                 appenaCreato = true; // Segnala che è una nuova creazione
+              }
               };
 
-                request.onsuccess = function(event) {
-                 db = event.target.result;
-                 document .getElementById("error").innerText = "archivio esistente";
-                };
-              
+              request.onsuccess = function(event) {
+                db = event.target.result;
+  
+                // Controlla il flag per decidere quale messaggio mostrare
+             if (appenaCreato) {
+              document.getElementById("error").innerText = "archivio creato con successo";
+             } else {
+              document.getElementById("error").innerText = "archivio esistente";
+               }
+             };
+
             }
 
-            function inizio(){
+               function inizio(){
                location.href='index.html';
                return
               }
