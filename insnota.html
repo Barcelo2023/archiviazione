@@ -5,106 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inserisce nota</title>
      <link rel="icon" href="img/favicon.png"  type="image/png">
-    <style>
-   body{
-    margin: 0;
-    padding: 0;
-    display: flex;
-    font-family: 'Times New Roman', serif;
-    align-items: center;
-    text-align: center;
-}
-   
+     <link rel="stylesheet" href="style-insnota.css"> 
+     
 
-
-#container{       
-    height: 500px;
-    width:273px;
-    margin-left: 40px;
-    margin-top: 50px;
-    background-color: cornflowerblue;
-    border-radius: 10px;
-    border: 5px;
-    text-align: center; 
-    justify-content: center;   
-    
-} 
-#tit{
-    transform: translateY(5px);
-}
-input
-{
-    height: 30px;
-    width: 180px;
-    display: flex;
-    border-radius: 5px;
-    font-size: 13px;
-    margin-top: 5px;
-    transform: translateX(44px);
-    
-}    
-
-
-textarea {
-    line-height: 20px; 
-    background-image: linear-gradient(transparent 19px, #ccc 19px);
-    background-size: 100% 20px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin-top: 35px;
-}
-
-button{
-    height: 30px;
-    width: 200px;
-   margin-top: 10px; 
-   border-radius: 5px;
-   cursor: pointer;
-   background-color:white;
-   display: inline;
-   margin-top: 30px;
-  
-   
-}
-
-#data
-{
-    height: 20px;
-    width: 125px;
-    display: flex;
-    border-radius: 5px;
-    font-size: 11px;
-    transform: translate(64px ,40px);
-    
-}  
-#errort{
-     color: red;
-    
-}  
-#errorm{
-     color: red;
-    
-}  
-
-button:hover{
-    
-    background-color: rgb(179, 245, 242);
-}
-  </style>
-  
 </head>
-     <div id="container">
+ <body>
+
+     <div class="container">
      <h2>Inserisce nota</h2>
         <div  id="tit"   >Nome Archivio</div>
-     <input type="text"   id="archivio"  required  >     
-     
+     <input type="text"   id="archivio"  required  autocomplete="off" >     
+      <div  id="errorarch"   ></div>
       <div  id="tit"   >Titolo nota</div>
      <input type="text"   id="titolo"  required  autocomplete="off">     
-      <div  id="errort"   ></div>
-     <textarea  name="message" id="message" rows="5"  cols="30"  required></textarea>
-     <div  id="errorm"   ></div>
+      <div  id="errortitolo"   ></div>
+     <textarea  name="message" id="message" rows="4"  cols="30"  required></textarea>
+     <div  id="errormessage"   ></div>
       <button onclick= "cripta()" 
-      type="button" >Insert</button>
+      type="button" >Inserisce nota</button>
+      <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
 
       <input type="text" id="data"  name="data" readonly>
      
@@ -145,24 +64,23 @@ button:hover{
                  conta++;                 	
               	}while ( conta < 255); 
                   
-                 function cripta() {  
-
-                archivio = document.getElementById('archivio').value;
-
-                 let trovato =  localStorage.getItem(archivio);
-                if (trovato === null){
-                 
-                 document .getElementById("errort").innerText = "nome archivio errato "; 
+                 function cripta() { 
+                   archivio = document.getElementById('archivio').value; 
+                   lunghezza = archivio.length;                            
+                 if (lunghezza  < 5){
+                 document .getElementById("errorarch").innerText = "Nome archivio mancante o errato "; 
                  return                                   
                  } 
-
-                   titolo = document.getElementById('titolo').value;
+                  document .getElementById("errorarch").innerText = "";  
+                
+                 titolo = document.getElementById('titolo').value;
 
                  lunghezza = titolo.length;                            
                  if (lunghezza  < 5){
-                 document .getElementById("errort").innerText = "Titolo mancante "; 
+                 document .getElementById("errortitolo").innerText = "Titolo mancante "; 
                  return                                   
                  } 
+                 document .getElementById("errortitolo").innerText = ""; 
                 testoMessage = document.getElementById('message').value;   
                            
                  stringaConverti =""; 
@@ -170,11 +88,12 @@ button:hover{
                  lunghezza = testoMessage.length; 
    
                  if (lunghezza < 15 ){
-                  document .getElementById("errorm").innerText = "messaggio mancante"; 
+                  document .getElementById("errormessage").innerText = "messaggio mancante"; 
                   return
                  } 
              
-
+                 document .getElementById("errormessage").innerText = ""; 
+                 
                for (conta=0; conta <lunghezza; conta ++)
 	               {		
                  lettera = testoMessage[conta] ;  	     		 
@@ -199,16 +118,23 @@ button:hover{
                 stringa2 = stringaConverti; 
 
                  // 1.  apro database'
+                  archivio = document.getElementById('archivio').value;
+
+                 let db;
                 const request = indexedDB.open(archivio, 1);
 
+                    request.onupgradeneeded = (event) => {
+                    document .getElementById("error").innerText = "nome archivio errato o mancante";   
+
+                    }
                  request.onsuccess = function(event) {
-                 const db = event.target.result;
+                 db = event.target.result;
   
                   // 2. Creare la transazione 'readwrite'
                    const transaction = db.transaction(["note"], "readwrite");
                    const store = transaction.objectStore("note");
 
-
+                    randomNumber = randomNumber +3;
                     key = titolo; // La tua chiave
                     dati= { numero: randomNumber, messaggio: stringa2 }; 
                      store.put(dati, key);                  
@@ -217,8 +143,12 @@ button:hover{
   };               
    
   };
-         
+                     function inizio(){
+               location.href='index.html';
+               return
+              }
         
+  
     </script>
               
   </body>
