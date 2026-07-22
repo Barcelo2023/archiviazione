@@ -46,8 +46,7 @@
             let pari=0;
             let lettera = "";            
             let data ;
-            let titolo;
-            let archivio;
+           
             let key;        
             let dati;
         
@@ -65,15 +64,18 @@
               	}while ( conta < 255); 
                   
                  function cripta() { 
-                   archivio = document.getElementById('archivio').value; 
+
+                 const testoOriginale = document.getElementById('archivio').value;
+                 const archivio = testoOriginale.toLowerCase().replace(/ /g, "");
+ 
                    lunghezza = archivio.length;                            
                  if (lunghezza  < 5){
                  document .getElementById("errorarch").innerText = "Nome archivio mancante o errato "; 
                  return                                   
                  } 
                   document .getElementById("errorarch").innerText = "";  
-                
-                 titolo = document.getElementById('titolo').value;
+                 const titoloOriginale = document.getElementById('titolo').value;
+                 const titolo = titoloOriginale.toLowerCase().replace(/ /g, "");
 
                  lunghezza = titolo.length;                            
                  if (lunghezza  < 5){
@@ -87,7 +89,7 @@
                  numero = randomNumber;
                  lunghezza = testoMessage.length; 
    
-                 if (lunghezza < 15 ){
+                 if (lunghezza < 10 ){
                   document .getElementById("errormessage").innerText = "messaggio mancante"; 
                   return
                  } 
@@ -118,13 +120,13 @@
                 stringa2 = stringaConverti; 
 
                  // 1.  apro database'
-                  archivio = document.getElementById('archivio').value;
-
+   
                  let db;
                 const request = indexedDB.open(archivio, 1);
 
                     request.onupgradeneeded = (event) => {
-                    document .getElementById("error").innerText = "nome archivio errato o mancante";   
+                    document .getElementById("errorarch").innerText = "nome archivio errato o mancante";  
+                    return 
 
                     }
                  request.onsuccess = function(event) {
@@ -137,12 +139,20 @@
                     randomNumber = randomNumber +3;
                     key = titolo; // La tua chiave
                     dati= { numero: randomNumber, messaggio: stringa2 }; 
-                     store.put(dati, key);                  
+                     store.add(dati, key);  
+                request.onerror = function(event) {
+                        // Questo alert ti mostrerà il motivo esatto del fallimento sul telefono
+             
+              document.getElementById("message").innerText = "Errore : " + event.target.error.name + " - " + event.target.error.message;
+                 return
+               };
+                
                 
                    document.getElementById('message').value = "nota inserita con successo";               
-  };               
+                 };               
    
-  };
+        };
+
                      function inizio(){
                location.href='index.html';
                return
