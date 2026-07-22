@@ -5,123 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leggi msg</title>
      <link rel="icon" href="img/favicon.png"  type="image/png">
-    <style>
-
-body
-{
-    margin: 0;
-    padding: 0;
-    display: flex;
-    font-family: 'Times New Roman', serif;
-    align-items: center;
-    text-align: center;
-}
-   
+     <link rel="stylesheet" href="style-readnota.css"> <!-- Il file CSS --> 
 
 
-#container{       
-    height: 500px;
-    width:273px;
-    margin-left: 40px;
-    margin-top: 50px;
-    background-color: cornflowerblue;
-    border-radius: 10px;
-    border: 5px;
-   
-   
-    
-} 
-
-h3{
-    
-    margin-top: 40px;
-    
-}
-
-
- 
-  
-input{
-   height: 30px;
-    width: 180px;   
-    border-radius: 5px;   
-    font-size: 14px;
-    transform: translateY(-12px);  
-
-}    
-
-
-#error{
-    color: red;        
-}
-
-
-
-
-textarea {
-    line-height: 20px; 
-    background-image: linear-gradient(transparent 19px, #ccc 19px);
-    background-size: 100% 20px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin-top: 20px;
-}
-button{
-    width: 68px;
-    height: 35px;
-    margin-top: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    display: inline;
-}
-
-#btc{
-  transform: translateY(-8px);
-}
-#data{
-     height: 20px;
-    width: 132px;
-   
-    border-radius: 5px;
-    padding: 0 15px;
-    font-size: 12px;
-    
-    margin-top: 35px;
-   
-
-}  
-button:hover{
-    background-color: orangered;
-}
-
-
-  </style>
   </head>
   <body>
         
 
-    <div id="container">
-     <h3>Leggi note</h3>
+    <div class="container">
+     <h2>Leggi note</h2>
 
-       <p id="arch"   >Nome archivio</p> 
-      <input type="text" name="archivio" id="archivio" required  >     
-            
-       <p id="inskey"   >titolo nota</p> 
-      <input type="text" name="nota" id="nota" required  >           
-      <div  id="error"  required  ></div>          
+       <p id="nome"   >Nome archivio</p> 
+      <input type="text" name="archivio" id="archivio"  autocomplete="off">     
+      <div  id="errorarch"  ></div>         
+       <p id="tit"   >titolo nota</p> 
+      <input type="text" name="nota" id="titolo" required  >           
+      <div  id="errortitolo"  ></div>          
       
-      <textarea  name="message" id="message" rows="5"  cols="30" ></textarea>             
+      <textarea  name="message" id="message" rows="4"  cols="30" ></textarea>             
 
       <button onclick="verifica()" 
             type="button" id="verifica" >Richiama nota</button>
 
        <button onclick="decripta()" disabled = "disabled"; 
             type="button" id="abilita" >Decripta nota</button>
-            
-       <button onclick="pulisci()" disabled = "disabled"; 
-            type="button" id="btc" >Pulisci</button>
-
+        <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>    
+      
        <input type="text" name="data" id="data" >
 
    </div>  
@@ -150,17 +59,17 @@ button:hover{
                 
               archivio = document.getElementById('archivio').value;
 
-               let trovato =  localStorage.getItem(archivio);
-                if (trovato === null){
+              lunghezza = archivio.length;
+              if(lunghezza  < 3 ){
                  
-                 document .getElementById("error").innerText = "nome archivio errato "; 
-                 return                                   
+               document .getElementById("errorarch").innerText = "nome archivio errato "; 
+               return                                   
                  } 
-
-              nota = document.getElementById('nota').value;
+               document .getElementById("errorarch").innerText = ""; 
+               nota = document.getElementById('titolo').value;
                lunghezza = nota.length;
               if(lunghezza  < 3 ){
-               document .getElementById("error").innerText = "titolo nota errato o mancante";  
+               document .getElementById("errortitolo").innerText = "titolo nota errato o mancante";  
                return
               }
 
@@ -186,6 +95,7 @@ button:hover{
              if (record) {
                numeroRandom = record.numero;
                msg = record.messaggio;
+               numeroRandom = numeroRandom -3;
                document.getElementById('message').value = (msg) ; 
                 document.getElementById('abilita').disabled = false; 
      
@@ -232,17 +142,16 @@ button:hover{
           } 
               
                  document.getElementById("message").value = stringaConverti;
-                 document.getElementById('btc').disabled = false;  
+                 
                 
       }    
              
-                 function pulisci(){
-                 document.getElementById('archivio').value ="";
-                  document .getElementById("error").innerText = ""; 
-                  document.getElementById("message").value = ""; 
-                   document.getElementById("nota").value = ""; 
+                 function inizio(){
+               location.href='index.html';
+               return
+              }
 
-                 }
+                
         
     </script>
      
