@@ -6,167 +6,53 @@
     <title>inserimento note</title>
 
     <link rel="icon" href="img/favicon.png"  type="image/png">
-    <style>
- 
-   
-
-   body{
-    margin: 0;
-    padding: 0;
-    display: flex;
-     text-align: center;   
+     
+     <link rel="stylesheet" href="style-index.css"> <!-- Il file CSS --> 
     
-}
-   
-
-
-#container{       
-    height: 450px;
-    width:273px;
-    margin-left: 40px;
-    margin-top: 50px;  
-    background-color: cornflowerblue;
-    border-radius: 10px;
-    border: 5px;
-    align-items: center;
-    text-align: center;
-    
-    
-}
-
-h3{
-    margin-top: 30px;    
-}
-
-
-#arch{
-   height: 30px;
-    width: 150px;  
-    border-radius: 5px;   
-    font-size: 16px;
-    font-family: 'Times New Roman', serif;
-    margin-top: 5px;
-    border: groove;
-    cursor: pointer;  
-}
-
-#error{
-    color: red;
-}
-
-#data
-{
-    height: 20px;
-    width: 126px;  
-    border-radius: 5px;   
-    font-size: 12px;
-    font-family: 'Times New Roman', serif;
-    margin-top: 80px;
-    border: groove;
-
-}    
-
-
-
-
-button
-{
-    width: 80px;
-    height: 35px;
-    margin-top:45px;
-    border-radius: 5px;
-
-    margin-left: 10px;
-    cursor: pointer;
-    
-   
-}
-
-#buttl{
-    transform: translateY(-9px);
-}
-
-
-button:hover
-{
-    background-color: orangered;
-}
-
-
-  </style>
+  
   </head>
   <body>
          
 
-      <div id="container">
-     <h3>Archivio note</h3>
-     <div id="nome">Nome Archivio</div>
-     <input type="text" name="arch"  id="arch">
-      <div  id="error"   ></div> 
-       <button onclick="creaarch()"  >crea archivio</button> 
+      <div class="container">
+     <h2>Archiviazione</h2>
+    
+      <div  id="pulsanti">
+       <button onclick="creaarch()"  >Crea archivio</button> 
 
-      <button onclick="chiavi()"  >chiavi inserite</button>          
+      <button onclick="insnota()"  >Inserisci nota</button>          
            
-      <button  onclick="inserisci()" >inserisci nota</button>
+      <button  onclick="readnota()" >Leggi nota</button>
 
-      <button  onclick="leggi()"  id="buttl">leggi note</button>
+      <button  onclick="noteInserite()"  id="buttl">Note inserite</button>
 
        <input type="text" name="data" id="data"  readonly>
-                      
+
+       </div>               
      <script> 
 
              let data = new Date(); 
              document.getElementById('data').value = (data); 
                         
-              function creaarch()
-              { 
-                let archivio =document.getElementById('arch').value;
-                
-             //      verifico se l archivio esiste                
-                let trovato =  localStorage.getItem(archivio);
-                if (trovato != null){
-                 document .getElementById("error").innerText = "archivio gia' creato"; 
-                 return
-                }
-                  
-                let  lunghezza = archivio.length; 
+              function creaarch(){
+               location.href='creaarch.html';
+               return
+              }
               
-                 if (lunghezza < 5 || lunghezza > 16)  {
-                  document .getElementById("error").innerText = "nome archivio errato"; 
-                  return
-                 } 
-  
-  //      se archivioo non esiste lo creo 
-                  document .getElementById("error").innerText = ""; 
-
-                 let db;
-                 let request = indexedDB.open(archivio, 1);
-
-                  request.onupgradeneeded = (event) => {
-                 db = event.target.result;
-                 // Creazione dello store SENZA keyPath definita
-                 if (!db.objectStoreNames.contains("note")) {
-                  db.createObjectStore("note");
-                  localStorage.setItem(archivio, 'ARCHIVIO');
-                }
-              };
-              
-              }  
-              
-              function chiavi(){
+              function noteInserite(){
                location.href='scroll.html';
                return
             
               }
 
                
-               function inserisci()
+               function insnota()
                {                      
                location.href='insnota.html';
                return
               }
  
-              function leggi()
+              function readnota()
                {                      
                location.href='readnota.html';
                return
