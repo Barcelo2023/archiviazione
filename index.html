@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inserimento note</title>
+    <title>Archiviazione</title>
 
     <link rel="icon" href="img/favicon.png"  type="image/png">
      
@@ -24,7 +24,7 @@
            
       <button  onclick="readnota()" >Leggi nota</button>
 
-      <button  onclick="noteInserite()"  id="buttl">Note inserite</button>
+      <button  onclick="cancellaArchivio()"  id="cancella">Cancella archivio</button>
 
        <input type="text" name="data" id="data"  readonly>
 
@@ -39,8 +39,8 @@
                return
               }
               
-              function noteInserite(){
-               location.href='scroll.html';
+              function cancellaArchivio(){
+               location.href='cancella.html';
                return
             
               }
