@@ -19,7 +19,7 @@
       <input type="text" name="archivio" id="archivio"  autocomplete="off">     
       <div  id="errorarch"  ></div>         
        <p id="tit"   >titolo nota</p> 
-      <input type="text" name="nota" id="titolo" required  >           
+      <input type="text" name="titolo" id="titolo" required  >           
       <div  id="errortitolo"  ></div>          
       
       <textarea  name="message" id="message" rows="4"  cols="30" ></textarea>             
@@ -47,7 +47,6 @@
         let pari;     
         let stringaConverti;
         let numeroRandom;
-        let nota;
         let db;
         let archivio;
 
@@ -56,19 +55,28 @@
              document.getElementById('data').value = (data) ; 
              
              function verifica(){
+
+               const testoOriginale = document.getElementById('archivio').value;
+                 const archivio = testoOriginale.toLowerCase().replace(/ /g, "");
+                                                                       
+                // Risultato: "testo in maiuscolo"
                 
-              archivio = document.getElementById('archivio').value;
+ 
 
               lunghezza = archivio.length;
-              if(lunghezza  < 3 ){
+              if(lunghezza  < 5 ){
                  
                document .getElementById("errorarch").innerText = "nome archivio errato "; 
                return                                   
                  } 
                document .getElementById("errorarch").innerText = ""; 
-               nota = document.getElementById('titolo').value;
+
+
+               const titoloOriginale = document.getElementById('titolo').value;
+              let  nota  = titoloOriginale.toLowerCase().replace(/ /g, "");
+                                                                    
                lunghezza = nota.length;
-              if(lunghezza  < 3 ){
+              if(lunghezza  < 5 ){
                document .getElementById("errortitolo").innerText = "titolo nota errato o mancante";  
                return
               }
@@ -95,7 +103,7 @@
              if (record) {
                numeroRandom = record.numero;
                msg = record.messaggio;
-               numeroRandom = numeroRandom -3;
+              
                document.getElementById('message').value = (msg) ; 
                 document.getElementById('abilita').disabled = false; 
      
