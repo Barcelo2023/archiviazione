@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea archivio</title>
+     <link rel="icon" href="img/favicon.png"  type="image/png">
+     <link rel="stylesheet" href="style-creaarch.css"> <!-- Il file CSS --> 
+   </head>
+     <body>
+
+       <div class="container">
+       <h2>Crea archivio</h2>
+    
+      
+       <p id="nome">Nome dell'archivio</p>
+       <input type="text" name="nome" id="arch" autocomplete="off">
+       <div id="error"></div>
+       
+       <button onclick="creaarch()" id="crea" >Crea archivio</button> 
+       <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
+
+      
+       <input type="text" name="data" id="data"  readonly>
+
+       </div>               
+        
+    <script>
+
+               let data = new Date(); 
+             document.getElementById('data').value = (data); 
+                        
+              function creaarch()
+              { 
+                let archivio =document.getElementById('arch').value;
+                
+            
+                let  lunghezza = archivio.length; 
+              
+                 if (lunghezza < 5 || lunghezza > 16)  {
+                  document .getElementById("error").innerText = "nome archivio errato"; 
+                  return
+                 } 
+  
+  //      se archivioo non esiste lo creo 
+                  document .getElementById("error").innerText = ""; 
+
+                 let db;
+                 let request = indexedDB.open(archivio, 1);
+
+                  request.onupgradeneeded = (event) => {
+                 db = event.target.result;
+                 // Creazione dello store SENZA keyPath definita
+                 if (!db.objectStoreNames.contains("note")) {
+                  db.createObjectStore("note");
+                  
+                   document .getElementById("error").innerText = "archivio creato con successo"; 
+                }
+                
+              };
+
+                request.onsuccess = function(event) {
+                 db = event.target.result;
+                 document .getElementById("error").innerText = "archivio esistente";
+                };
+              
+            }
+
+            function inizio(){
+               location.href='index.html';
+               return
+              }
+    </script>   
+        
+    </body> 
+    </html>   
