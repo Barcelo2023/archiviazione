@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancella nota</title>
+     <link rel="icon" href="img/favicon.png"  type="image/png">
+     <link rel="stylesheet" href="style-cancnota.css"> <!-- Il file CSS --> 
+   </head>
+     <body>
+
+       <div class="container">
+       <h2>Cancella nota</h2>
+    
+      
+       <p id="nome">Nome dell'archivio</p>
+       <input type="text" name="nome" id="arch" autocomplete="off">
+       <div id="error"></div>
+       <p id="nomeNota">Nome nota</p>
+       <input type="text" name="nome" id="nota" autocomplete="off">
+       <div id="errorNota"></div>
+       <button onclick="cancella()" id="cancella" >Cancella nota</button> 
+       <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
+
+      
+       <input type="text" name="data" id="data"  readonly>
+
+       </div>               
+        
+    <script>
+
+               let data = new Date(); 
+               document.getElementById('data').value = (data); 
+                        
+                function cancella()  { 
+           
+
+
+                const testoOriginale = document.getElementById('arch').value;
+                 const archivio = testoOriginale.toLowerCase().replace(/ /g, "");
+                                                                       
+                // Risultato: "testo in maiuscolo"
+
+                let  lunghezza = archivio.length; 
+              
+                 if (lunghezza < 5 || lunghezza > 10)  {
+                  document .getElementById("error").innerText = "nome archivio errato o mancante"; 
+                  return
+                 } 
+           
+                 const notaOriginale = document.getElementById('nota').value;
+                 let  nota  = notaOriginale.toLowerCase().replace(/ /g, "");
+                                                                    
+                 lunghezza = nota.length;
+                 if(lunghezza  < 5 ){
+                document .getElementById("errorNota").innerText = " nota errata o mancante";  
+                return
+                }
+                                               
+                  // 1. Apri la connessione al database
+                const request = indexedDB.open(archivio, 1);
+ 
+                 request.onupgradeneeded = (event) => {
+                  document .getElementById("error").innerText = "nome archivio errato o mancante";  
+                   return 
+
+                    }
+                 request.onsuccess = function(event) {
+                  const db = event.target.result;
+
+                  // 2. Avvia una transazione in modalità scrittura ('readwrite')
+                 const transaction = db.transaction(["note"], "readwrite");
+    
+                 // 3. Accedi all'Object Store
+                const objectStore = transaction.objectStore("note");
+
+                   // 4. Esegui la cancellazione indicando la chiave primaria del record
+                
+                 const deleteRequest = objectStore.delete(nota);
+
+                     // 5. Gestisci il successo o l'errore
+                      deleteRequest.onsuccess = function(event) {
+                    document .getElementById("errorNota").innerText = " nota cancellata";       
+                      return
+                       };
+
+                    deleteRequest.onerror = function(event) {
+  document .getElementById("errorNota").innerText =("Errore cancellazione:", event.target.error);
+     return
+           };
+          };
+
+              
+       }
+
+               function inizio(){
+               location.href='index.html';
+               return
+              }
+    </script>   
+        
+    </body> 
+    </html>   
