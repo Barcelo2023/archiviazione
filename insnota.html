@@ -45,9 +45,7 @@
             let ascii = "";          
             let pari=0;
             let lettera = "";            
-            let data ;
-           
-            let key;        
+            let data ;     
             let dati;
         
         
@@ -137,9 +135,9 @@
                    const store = transaction.objectStore("note");
 
                     
-                    key = titolo; // La tua chiave
-                    dati= { numero: randomNumber, messaggio: stringa2 }; 
-                     store.put(dati, key);  
+                   
+                    dati= {  id : titolo, numero: randomNumber, messaggio: stringa2 }; 
+                     store.put(dati);  
                 request.onerror = function(event) {
                         // Questo alert ti mostrerà il motivo esatto del fallimento sul telefono
              
@@ -148,7 +146,8 @@
                };
                 
                 
-                   document.getElementById('message').value = "nota inserita con successo";               
+                   document.getElementById('message').value = "nota inserita con successo"; 
+                   return              
                  };               
    
         };
