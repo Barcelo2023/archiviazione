@@ -12,16 +12,23 @@
         width: 273px;           
         height: 500px; 
         border-radius: 6px;
-        background-color: cornflowerblue;         
+        background-color:#35393d;       
         overflow-y: auto;   /* Scroll verticale automatico se  eccede */
-        border: 2px solid #333; /* Bordo per evidenziare l'area */
+        border: 2px solid bisque; /* Bordo per evidenziare l'area */
         padding: 10px;
         text-align: center;
-        
+        color: #83abd8; 
+    }
+
+    h2{
+     color: #83abd8;  
     }
     #nome{
       transform: translateY(10px);
+      color: #83abd8; 
     }
+
+
     input{
       width: 180px;
       height: 30px;
@@ -38,32 +45,40 @@
       border-radius: 7px;
       cursor: pointer;
       margin-top: 30px;
-    }
+      background-color:#35393d; 
+      color: #83abd8;
+}
+    
      </style>
      <body>
          
 
     <div id="contenitore">
-     <h3>Elenco chiavi inserite</h3>
+     <h2>Elenco note inserite</h2>
      <p id="nome">nome archivio</p> 
      
-     <input type="text" id="arch">
+     <input type="text" id="arch" autocomplete="off">
      <div  id="error"   ></div>
 
-     <button onclick="leggichiavi()">leggi chiavi</button>
+     <button onclick="leggichiavi()">Leggi note</button>
+     <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
+
+
         </div>
       <script>
 
          function leggichiavi(){
-           let  archivio = document.getElementById('arch').value;
-
-          let trovato =  localStorage.getItem(archivio);
-                if (trovato === null){
-                 
-                 document .getElementById("error").innerText = "nome archivio errato "; 
+           const testoOriginale = document.getElementById('arch').value;
+                 const archivio = testoOriginale.toLowerCase().replace(/ /g, "");
+ 
+                   lunghezza = archivio.length;                            
+                 if (lunghezza  < 5){
+                 document .getElementById("error").innerText = "Nome archivio mancante o errato "; 
                  return                                   
                  } 
-            document .getElementById("error").innerText ="";      
+
+                  document .getElementById("error").innerText= "" ; 
+           
            const request = indexedDB.open(archivio, 1);
 
            request.onsuccess = function(event) {
@@ -101,12 +116,18 @@
            cursor.continue();
               } else {
             
+                document .getElementById("error").innerText = "Fine elenco note "; 
+                document .getElementById("arch").value = ""; 
+
       return
             }
         }; 
       }           
   }              
-            
+                  function inizio(){
+               location.href='index.html';
+               return
+              }   
     
       </script>
      </body>
