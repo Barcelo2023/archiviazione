@@ -23,8 +23,9 @@
       <button onclick="insnota()"  >Inserisci nota</button>          
            
       <button  onclick="readnota()" >Leggi nota</button>
+     
       <button  onclick="elencoNote()"  id="elenco">Elenco note</button>
-
+       <button  onclick="cancellaNota()" >Cancella nota</button>
       <button  onclick="cancellaArchivio()"  id="cancella">Cancella archivio</button>
 
 
@@ -58,13 +59,17 @@
                return
               }
               
-               function cancellaArchivio(){
-               location.href='cancella.html';
+               function cancellaNota(){
+               location.href='cancnota.html';
                return
             
               }
             
-                
+              function cancellaArchivio(){
+               location.href='cancarch.html';
+               return
+            
+              }  
     </script>
         
     </body>
