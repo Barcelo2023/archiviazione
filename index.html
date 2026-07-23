@@ -23,8 +23,10 @@
       <button onclick="insnota()"  >Inserisci nota</button>          
            
       <button  onclick="readnota()" >Leggi nota</button>
+      <button  onclick="elencoNote()"  id="elenco">Elenco note</button>
 
       <button  onclick="cancellaArchivio()"  id="cancella">Cancella archivio</button>
+
 
        <input type="text" name="data" id="data"  readonly>
 
@@ -38,14 +40,7 @@
                location.href='creaarch.html';
                return
               }
-              
-              function cancellaArchivio(){
-               location.href='cancella.html';
-               return
-            
-              }
-
-               
+                                          
                function insnota()
                {                      
                location.href='insnota.html';
@@ -57,8 +52,17 @@
                location.href='readnota.html';
                return
               }
+               function elencoNote()
+               {                      
+               location.href='scroll.html';
+               return
+              }
               
- 
+               function cancellaArchivio(){
+               location.href='cancella.html';
+               return
+            
+              }
             
                 
     </script>
