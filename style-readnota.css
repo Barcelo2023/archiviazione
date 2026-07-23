@@ -37,7 +37,7 @@ html, body {
   padding: 14px;                  /* Dimensione comoda da cliccare su touchscreen */
   font-size: 22px;                   /* Evita lo zoom automatico fastidioso su iOS */
   border-radius: 8px;
-  border: 1px solid #ccc;
+ 
   box-sizing: border-box;
    background-color:#35393d;
    color: #83abd8; 
@@ -53,7 +53,7 @@ html, body {
   padding: 14px;                  /* Dimensione comoda da cliccare su touchscreen */
   font-size: 14px;                   /* Evita lo zoom automatico fastidioso su iOS */
   border-radius: 8px;
-  border: 1px solid #ccc;
+ 
   box-sizing: border-box;
    background-color:#6c757d; 
    color: #83abd8; 
