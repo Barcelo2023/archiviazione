@@ -55,7 +55,7 @@
                 request.onupgradeneeded = (event) => {
                 db = event.target.result;
                 if (!db.objectStoreNames.contains("note")) {
-                 db.createObjectStore("note");
+                 db.createObjectStore("note", { keyPath: "id", autoIncrement: true });
                  appenaCreato = true; // Segnala che è una nuova creazione
               }
               };
