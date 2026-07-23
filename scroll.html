@@ -79,24 +79,25 @@
 
                   document .getElementById("error").innerText= "" ; 
            
-           const request = indexedDB.open(archivio, 1);
+               const request = indexedDB.open(archivio, 1);
 
-           request.onsuccess = function(event) {
-          const db = event.target.result;
+               request.onsuccess = function(event) {
+                const db = event.target.result;
   
-           // 2. Creare la transazione 'readwrite'
-           const transaction = db.transaction(["note"], "readwrite");
-            const store = transaction.objectStore("note"); 
+                // 2. Creare la transazione 'readwrite'
+                const transaction = db.transaction(["note"], "readwrite");
+               const store = transaction.objectStore("note"); 
             // 1. Apre il cursore per tutti i record
-            const request = store.openCursor();
+               const request = store.openCursor();
 
-            request.onsuccess = (event) => {
-           const cursor = event.target.result;
+                 request.onsuccess = (event) => {
+               const cursor = event.target.result;
   
-          // 2. Se il cursore ha un valore, prosegui
-           if (cursor) {
+      
+              // 2. Se il cursore ha un valore, prosegui
+            if (cursor) {
 
-           // Seleziona il contenitore
+                        // Seleziona il contenitore
             let container = document.getElementById('contenitore');
    
         
@@ -115,9 +116,17 @@
            // 3. Passa al record successivo
            cursor.continue();
               } else {
-            
-                document .getElementById("error").innerText = "Fine elenco note "; 
-                document .getElementById("arch").value = ""; 
+                // Aggiunge fine elenco
+               let container = document.getElementById('contenitore'); 
+               let nuovoElemento = document.createElement('p');
+              nuovoElemento.textContent = "fine elenco note";
+               
+
+             // Aggiunge il nuovo elemento alla fine
+             container.appendChild(nuovoElemento);  
+           
+              
+             document .getElementById("arch").value = ""; 
 
       return
             }
