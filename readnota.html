@@ -6,17 +6,18 @@
     <title>Leggi msg</title>
      <link rel="icon" href="img/favicon.png"  type="image/png">
      <link rel="stylesheet" href="style-readnota.css"> <!-- Il file CSS --> 
-
+      <script  src="dataora.js"></script>
 
   </head>
   <body>
         
 
     <div class="container">
-     <h2>Leggi note</h2>
+      <div  id="datetime"> </div>  
+     <h2>Leggi nota</h2>
 
        <p id="nome"   >Nome archivio</p> 
-      <input type="text" name="archivio" id="archivio"  autocomplete="off">     
+      <input type="text" name="archivio" id="archivio"  autocomplete="on">     
       <div  id="errorarch"  ></div>         
        <p id="tit"   >titolo nota</p> 
       <input type="text" name="titolo" id="titolo" autocomplete="off"  >           
@@ -31,8 +32,7 @@
             type="button" id="abilita" >Decripta nota</button>
         <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>    
       
-       <input type="text" name="data" id="data" >
-
+    
    </div>  
 
     <script>
@@ -51,8 +51,7 @@
         let archivio;
 
 
-             let data= new Date(); 
-             document.getElementById('data').value = (data) ; 
+             caricodata();
              
              function verifica(){
 
