@@ -6,15 +6,17 @@
     <title>Cancella nota</title>
      <link rel="icon" href="img/favicon.png"  type="image/png">
      <link rel="stylesheet" href="style-cancnota.css"> <!-- Il file CSS --> 
+      <script  src="dataora.js"></script>
    </head>
      <body>
 
        <div class="container">
+        <div  id="datetime"> </div>  
        <h2>Cancella nota</h2>
     
       
        <p id="nome">Nome dell'archivio</p>
-       <input type="text" name="nome" id="arch" autocomplete="off">
+       <input type="text" name="nome" id="arch" autocomplete="on">
        <div id="error"></div>
        <p id="nomeNota">Nome nota</p>
        <input type="text" name="nome" id="nota" autocomplete="off">
@@ -23,15 +25,12 @@
        <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
 
       
-       <input type="text" name="data" id="data"  readonly>
-
+  
        </div>               
         
     <script>
-
-               let data = new Date(); 
-               document.getElementById('data').value = (data); 
-                        
+                 caricodata();
+              
                 function cancella()  { 
            
 
