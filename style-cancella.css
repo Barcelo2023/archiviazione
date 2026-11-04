@@ -26,9 +26,14 @@ html, body {
    2. TITOLI E POSIZIONAMENTO VERTICALE
    ========================================================================== */
 .container h2 {
-   transform: translateY(35px);
+   transform: translateY(15px);
    color: #83abd8;  
 }
+ #datetime{
+color: #83abd8;
+font-size: large;
+}
+
 
 .container p {
    
