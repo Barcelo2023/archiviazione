@@ -26,14 +26,18 @@ html, body {
    2. TITOLI E POSIZIONAMENTO VERTICALE
    ========================================================================== */
 .container h2 {
-   transform: translateY(35px);
+   transform: translateY(15px);
    color: #83abd8;  
+}
+ #datetime{
+color: #83abd8;
+font-size: large;
 }
 
 .container p {
    
    color: #83abd8; 
-   margin-top: 44px;
+   margin-top: 20px;
 }
 
 /* Il blocco centrale che racchiude i 5 pulsanti e la DATA */
@@ -87,7 +91,4 @@ html, body {
      margin-top: 4px;
     
 }  
-#data   { 
-   margin-top: 60px;
-   }
 
