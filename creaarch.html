@@ -6,10 +6,12 @@
     <title>Crea archivio</title>
      <link rel="icon" href="img/favicon.png"  type="image/png">
      <link rel="stylesheet" href="style-creaarch.css"> <!-- Il file CSS --> 
+      <script  src="dataora.js"></script>
    </head>
      <body>
 
        <div class="container">
+         <div  id="datetime"> </div>   
        <h2>Crea archivio</h2>
     
       
@@ -21,15 +23,13 @@
        <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
 
       
-       <input type="text" name="data" id="data"  readonly>
+      
 
        </div>               
         
     <script>
-
-               let data = new Date(); 
-               document.getElementById('data').value = (data); 
-                        
+               caricodata();
+               
                 function creaarch()  { 
            
 
