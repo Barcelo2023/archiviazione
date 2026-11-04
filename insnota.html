@@ -6,15 +6,16 @@
     <title>Inserisce nota</title>
      <link rel="icon" href="img/favicon.png"  type="image/png">
      <link rel="stylesheet" href="style-insnota.css"> 
-     
+      <script  src="dataora.js"></script>
 
 </head>
  <body>
 
      <div class="container">
-     <h2>Inserisce nota</h2>
+      <div  id="datetime"> </div>  
+     <h2>Inserisci nota</h2>
         <div  id="tit"   >Nome Archivio</div>
-     <input type="text"   id="archivio"  required  autocomplete="off" >     
+     <input type="text"   id="archivio"  required  autocomplete="on" >     
       <div  id="errorarch"   ></div>
       <div  id="tit"   >Titolo nota</div>
      <input type="text"   id="titolo"  required  autocomplete="off">     
@@ -22,10 +23,10 @@
      <textarea  name="message" id="message" rows="4"  cols="30"  required></textarea>
      <div  id="errormessage"   ></div>
       <button onclick= "cripta()" 
-      type="button" >Inserisce nota</button>
+      type="button" >Inserisci nota</button>
       <button onclick="inizio()"  id="ritorna">Pagina iniziale</button>
 
-      <input type="text" id="data"  name="data" readonly>
+    
      
      
      
@@ -50,8 +51,7 @@
         
         
                        
-                  data = new Date();                                                                
-                  document.getElementById('data').value = (data) ; 
+                 caricodata();
 
                   let randomNumber= Math.floor(Math.random() * 30) + 1;
                   randomNumber = randomNumber + 10;                                                                 
