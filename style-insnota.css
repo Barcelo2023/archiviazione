@@ -29,6 +29,12 @@ html, body {
   color: #83abd8;
 }
 
+ #datetime{
+color: #83abd8;
+font-size: large;
+}
+
+
 /* Uniforma la larghezza di input, bottoni E della textarea */
 .container input, 
 .container button {
