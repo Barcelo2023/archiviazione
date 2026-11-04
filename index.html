@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archiviazione</title>
+     <script  src="dataora.js"></script>
+    
 
     <link rel="icon" href="img/favicon.png"  type="image/png">
      
@@ -15,6 +17,7 @@
          
 
       <div class="container">
+      <div  id="datetime"> </div>  
      <h2>Archiviazione</h2>
     
       <div  id="pulsanti">
@@ -29,14 +32,12 @@
       <button  onclick="cancellaArchivio()"  id="cancella">Cancella archivio</button>
 
 
-       <input type="text" name="data" id="data"  readonly>
+       
 
        </div>               
      <script> 
-
-             let data = new Date(); 
-             document.getElementById('data').value = (data); 
-                        
+               caricodata();
+          
               function creaarch(){
                location.href='creaarch.html';
                return
